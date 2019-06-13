@@ -94,7 +94,7 @@ namespace id4server
                     AllowedGrantTypes = GrantTypes.Implicit,
                 
                     // where to redirect to after login
-                    RedirectUris = { "http://localhost:5002/signin-oidc" },
+                    RedirectUris = { "http://localhost:5002/" },
 
                     // where to redirect to after logout
                     PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
@@ -103,7 +103,8 @@ namespace id4server
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
-                    }
+                    },
+                    AllowAccessTokensViaBrowser = true
                 }
             };
         }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace mvc
 {
@@ -31,6 +32,22 @@ namespace mvc
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // ensure not change any return Claims from Authorization Server
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc"; // oidc => open ID connect
+            })
+            .AddCookie("Cookies")
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.SignInScheme = "Cookies";
+                options.Authority = $"http://localhost:5000";
+                options.RequireHttpsMetadata = false; // please use https in production env
+                options.ClientId = "mvc";
+                options.ResponseType = "id_token token"; // allow to return access token
+                options.SaveTokens = true;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

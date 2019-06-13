@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using mvc.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace mvc.Controllers
 {
@@ -15,6 +16,7 @@ namespace mvc.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
