@@ -34,6 +34,17 @@ namespace id4server
                         new Claim("name", "Bob"),
                         new Claim("website", "https://bob.com")
                     }
+                },
+                new TestUser
+                {
+                    SubjectId = "3",
+                    Username = "bbigcd",
+                    Password = "bbigcdtest",
+                    Claims = new []
+                    {
+                        new Claim("name", "bbigcd"),
+                        new Claim("website", "http://bbigcd.com")
+                    }
                 }        
             };
         }
@@ -94,7 +105,7 @@ namespace id4server
                     AllowedGrantTypes = GrantTypes.Implicit,
                 
                     // where to redirect to after login
-                    RedirectUris = { "http://localhost:5002/" },
+                    RedirectUris = { "http://localhost:5002/signin-oidc" },
 
                     // where to redirect to after logout
                     PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },

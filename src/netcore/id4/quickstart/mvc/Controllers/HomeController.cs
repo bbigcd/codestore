@@ -17,6 +17,13 @@ namespace mvc.Controllers
         }
 
         [Authorize]
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application description page.";
+            return View();
+        }
+
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
