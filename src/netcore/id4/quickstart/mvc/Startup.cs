@@ -25,12 +25,13 @@ namespace mvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // services.Configure<CookiePolicyOptions>(options =>
+            // {
+            //     // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //     options.CheckConsentNeeded = context => true;
+            //     options.MinimumSameSitePolicy = SameSiteMode.None;
+            // });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // ensure not change any return Claims from Authorization Server
             services.AddAuthentication(options =>
@@ -42,14 +43,14 @@ namespace mvc
             .AddOpenIdConnect("oidc", options =>
             {
                 options.SignInScheme = "Cookies";
-                options.Authority = $"http://localhost:5000";
-                options.RequireHttpsMetadata = false; // please use https in production env
+                options.Authority = "http://localhost:5000";
+                options.RequireHttpsMetadata = false; // please use https in production env 
                 options.ClientId = "mvc";
                 options.ResponseType = "id_token token"; // allow to return access token
                 options.SaveTokens = true;
+                options.Scope.Add("api1");
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +67,8 @@ namespace mvc
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseAuthentication();
+            // app.UseHttpsRedirection(); 重定向不能使用https，否则授权后跳转失败
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
