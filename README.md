@@ -4,4 +4,6 @@
 | src下的文件夹 |      描述       |
 | :-----------: | :-------------: |
 |    netcore    | netcore平台相关 |
+|    python     |   python学习    |
+|      vue      |   vue测试项目   |
 
