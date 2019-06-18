@@ -8,7 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@handsontable/vue": "^4.0.0",
     "core-js": "^2.6.5",
+    "handsontable": "^7.1.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
