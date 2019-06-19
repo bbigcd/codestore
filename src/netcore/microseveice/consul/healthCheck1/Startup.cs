@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Consul;
 
 namespace healthCheck1
 {
@@ -33,8 +34,32 @@ namespace healthCheck1
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            var client = new ConsulClient(ConfigurationOverview);
+            var result = client.Agent.ServiceRegister(new AgentServiceRegistration()
+            {
+                ID = "hband_api",
+                Name = "api",
+                Address = "http://localhost",
+                Port = 5001,
+                Check = new AgentServiceCheck
+                {
+                    //服务启动多久后注册
+                    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
+                    //健康检查时间间隔，或者称为心跳间隔
+                    Interval = TimeSpan.FromSeconds(10),
+                    //健康检查地址
+                    HTTP = $"http://localhost:5001/api/health",//launchSettings.json 中设置
+                    Timeout = TimeSpan.FromSeconds(5)
+                }
+            });
         }
 
+        private static void ConfigurationOverview(ConsulClientConfiguration obj)
+        {
+            obj.Address = new Uri("http://127.0.0.1:8500");
+            obj.Datacenter = "dc1";
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
