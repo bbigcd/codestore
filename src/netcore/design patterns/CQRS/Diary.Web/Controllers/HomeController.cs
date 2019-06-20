@@ -5,12 +5,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Diary.Web.Models;
+using Diary.CQRS;
 
 namespace Diary.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private FakeBus _bus;
+        private ReadModelFacade _readmodel;
+
+        public HomeController()
+        {
+            _bus = ServiceLocator.Bus;
+            _readmodel = new ReadModelFacade();
+        }
+
         public IActionResult Index()
+        {
+            var model = _readmodel.GetInventoryItems();
+         
+            return View(model);
+        }
+
+        public IActionResult Add()
         {
             return View();
         }
