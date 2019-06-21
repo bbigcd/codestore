@@ -1,0 +1,15 @@
+﻿@model Diary.CQRS.InventoryItemDetailsDto
+@{
+    ViewData["Title"] = "Deactivate Page";
+}
+
+<div class="text-left">
+    @using (Html.BeginForm())
+    {
+        @Html.Hidden("Id", Model.Id)
+        @Html.Hidden("Version", Model.Version)
+        <br>
+        <label>Deactivate: @Model.Name Version: @Model.Version </label>
+        <input type="submit" value="Submit">
+    }
+</div>

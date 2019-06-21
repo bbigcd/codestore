@@ -41,7 +41,7 @@ namespace Diary.CQRS
             
             // try to get event descriptors list for given aggregate id
             // otherwise -> create empty dictionary
-            if(_current.TryGetValue(aggregateId, out eventDescriptors))
+            if(!_current.TryGetValue(aggregateId, out eventDescriptors))
             {
                 eventDescriptors = new List<EventDescriptor>();
                 _current.Add(aggregateId, eventDescriptors);

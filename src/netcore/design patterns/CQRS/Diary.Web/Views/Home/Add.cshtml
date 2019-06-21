@@ -1,9 +1,11 @@
-﻿@model IEnumerable<Diary.CQRS.InventoryItemListDto>
-
-@{
+﻿@{
     ViewData["Title"] = "Add Page";
 }
 
-<div class="text-center">
-    
+<div class="text-left">
+    @using (Html.BeginForm())
+    {
+        <input type="text" name="Name">
+        <input type="submit" value="Submit">
+    }
 </div>

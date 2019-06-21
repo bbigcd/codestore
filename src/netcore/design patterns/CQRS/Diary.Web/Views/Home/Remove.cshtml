@@ -1,0 +1,14 @@
+﻿@model Diary.CQRS.InventoryItemDetailsDto
+@{
+    ViewData["Title"] = "Change Name Page";
+}
+
+<div class="text-left">
+    @using (Html.BeginForm())
+    {
+        @Html.Hidden("Id", Model.Id)
+        @Html.Hidden("Version", Model.Version)
+        <input type="text" name="Number">
+        <input type="submit" value="Submit">
+    }
+</div>

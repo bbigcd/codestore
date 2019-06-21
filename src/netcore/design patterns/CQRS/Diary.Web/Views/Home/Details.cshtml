@@ -1,0 +1,21 @@
+﻿@model Diary.CQRS.InventoryItemDetailsDto
+@{
+    ViewData["Title"] = "Details Page";
+}
+
+<div class="text-left">
+    <label for="Id">Id : @Model.Id</label>
+    <br>
+    <label for="Name">Name : @Model.Name</label>
+    <br>
+    <label for="Count">Count : @Model.CurrentCount</label>
+    <br>
+    @Html.ActionLink("Rename", "ChangeName", new { Id = Model.Id })
+    <br>
+    @Html.ActionLink("Deactivate", "Deactivate", new { Id = Model.Id, Version = Model.Version })
+    <br>
+    @Html.ActionLink("Check in", "CheckIn", new { Id = Model.Id })
+    <br>
+    @Html.ActionLink("Remove", "Remove", new { Id = Model.Id })
+    <br>
+</div>
