@@ -17,3 +17,12 @@ for i in range(4):
         transposed_row.append(row[i])
     transposed.append(transposed_row)
 print(transposed)
+
+# del 语句
+a = [-1, 1, 66.25, 333, 333, 1234.5]
+del a[0]
+print(a)
+del a[2:4]
+print(a)
+del a[:]
+print(a)
