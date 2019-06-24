@@ -2,11 +2,13 @@ using System;
 
 namespace Diary.CQRS
 {
+    // 事件
     public class Event : Message
     {
         public int Version; 
     }
 
+    // 创建事件
     public class InventoryItemCreated : Event 
     {
         public readonly Guid Id;
@@ -19,6 +21,7 @@ namespace Diary.CQRS
         }
     }
 
+    // 重命名事件
     public class InventoryItemRenamed : Event
     {
         public readonly Guid Id;
@@ -31,6 +34,7 @@ namespace Diary.CQRS
         }
     }
 
+    // 停用事件
     public class InventoryItemDeactivated : Event
     {
         public readonly Guid Id;
@@ -40,6 +44,7 @@ namespace Diary.CQRS
         }        
     }
 
+    // 入库事件
     public class ItemsCheckedInToInventory : Event
     {
         public Guid Id;
@@ -52,6 +57,7 @@ namespace Diary.CQRS
         }
     }
 
+    // 出库事件
     public class ItemsRemovedFromInventory : Event
     {
         public Guid Id;

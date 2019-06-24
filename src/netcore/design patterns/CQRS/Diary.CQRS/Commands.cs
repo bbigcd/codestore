@@ -2,11 +2,13 @@ using System;
 
 namespace Diary.CQRS
 {
+    // 命令
     public class Command : Message
     {
         
     }
 
+    // 创建命令
     public class CreateInventoryItem : Command
     {
         public readonly Guid InventoryItemId;
@@ -19,6 +21,7 @@ namespace Diary.CQRS
         }
     }
 
+    // 注销命令
     public class DeactivateInventoryItem : Command 
     {
         public readonly Guid InventoryItemId;
@@ -31,6 +34,7 @@ namespace Diary.CQRS
         }
     }
 
+    // 重命名命令
     public class RenameInventoryItem : Command {
         public readonly Guid InventoryItemId;
         public readonly string NewName;
@@ -44,6 +48,7 @@ namespace Diary.CQRS
         }
     }
 
+    // 入库命令
     public class CheckInItemsToInventory : Command {
         public Guid InventoryItemId;
         public readonly int Count;
@@ -56,6 +61,7 @@ namespace Diary.CQRS
         }
     }
 
+    // 出库命令
     public class RemoveItemsFromInventory : Command {
         public Guid InventoryItemId;
         public readonly int Count;

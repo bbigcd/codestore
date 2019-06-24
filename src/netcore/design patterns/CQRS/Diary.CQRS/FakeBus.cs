@@ -51,16 +51,19 @@ namespace Diary.CQRS
         }
     }
 
+    // 处理方法
     public interface Handles<T>
     {
         void Handle(T message);        
     }
 
+    // 发送命令 
     public interface ICommandSender
     {
         void Send<T>(T command) where T : Command;
     }
 
+    // 事件发布者
     public interface IEventPublisher
     {
         void Publish<T>(T @event) where T : Event;

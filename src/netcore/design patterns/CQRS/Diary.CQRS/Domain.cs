@@ -62,6 +62,7 @@ namespace Diary.CQRS
         }
     }
 
+    // 聚合根
     public abstract class AggregateRoot
     {
          private readonly List<Event> _changes = new List<Event>();
@@ -81,7 +82,8 @@ namespace Diary.CQRS
 
          public void LoadsFromHistory(IEnumerable<Event> history)
          {
-             foreach(var e in history) ApplyChange(e, false);
+             foreach(var e in history)
+                ApplyChange(e, false);
          }
 
          protected void ApplyChange(Event @event)

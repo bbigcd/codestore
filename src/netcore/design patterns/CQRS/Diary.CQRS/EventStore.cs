@@ -6,7 +6,10 @@ namespace Diary.CQRS
 {
     public interface IEventStore
     {
+        // 保存事件
         void SaveEvents(Guid aggregateId, IEnumerable<Event> events, int expectedVersion);
+        
+        // 从聚合事件中获取事件
         List<Event> GetEventsForAggregate(Guid aggregateId);
     }
 
@@ -14,6 +17,7 @@ namespace Diary.CQRS
     {
         private readonly IEventPublisher _publisher;
 
+        // 事件的数据结构(事件描述)
         private struct EventDescriptor
         {
             public readonly Event EventData;
@@ -33,6 +37,7 @@ namespace Diary.CQRS
             _publisher = publisher;
         }
 
+        // 存储事件描述字典
         private readonly Dictionary<Guid, List<EventDescriptor>> _current = new Dictionary<Guid, List<EventDescriptor>>();
 
         public void SaveEvents(Guid aggregateId, IEnumerable<Event> events, int expectedVersion)

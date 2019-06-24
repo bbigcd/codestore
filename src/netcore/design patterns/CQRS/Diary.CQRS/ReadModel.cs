@@ -9,6 +9,7 @@ namespace Diary.CQRS
         InventoryItemDetailsDto GetInventoryItemDetails(Guid id);
     }
 
+    // 存储数据库模型 详细
     public class InventoryItemDetailsDto
     {
         public Guid Id;
@@ -25,6 +26,7 @@ namespace Diary.CQRS
         }
     }
 
+    // 存储数据库模型
     public class InventoryItemListDto
     {
         public Guid Id;
