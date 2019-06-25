@@ -8,4 +8,8 @@
     <ProjectReference Include="..\Diary.CQRS\Diary.CQRS.csproj" />
   </ItemGroup>
   
+  <ItemGroup>
+    <PackageReference Include="structuremap" Version="4.7.1" />
+  </ItemGroup>
+  
 </Project>

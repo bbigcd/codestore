@@ -11,8 +11,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
-  <!-- <ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Diary.CQRS\Diary.CQRS.csproj" />
-  </ItemGroup> -->
+    <!-- <ProjectReference Include="..\Diary.CQRS.Configuration\Diary.CQRS.Configuration.csproj" /> -->
+  </ItemGroup>
 
 </Project>

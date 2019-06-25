@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Diary.CQRS.Messaging;
+using Diary.CQRS.Reporting;
+using Diary.CQRS.Storage;
+using Diary.CQRS.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +35,13 @@ namespace Diary.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // services.AddSingleton<IRepository, Repository>();
+            services.AddSingleton<IEventStorage, InMemoryEventStorage>();
+            services.AddSingleton<IEventBus, EventBus>();
+            services.AddSingleton<ICommandHandlerFactory, StructureMapCommandHandlerFactory>();
+            services.AddSingleton<IEventHandlerFactory, StructureMapEventHandlerFactory>();
+            services.AddSingleton<ICommandBus, CommandBus>();
+            services.AddSingleton<IReportDatabase, ReportDatabase>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

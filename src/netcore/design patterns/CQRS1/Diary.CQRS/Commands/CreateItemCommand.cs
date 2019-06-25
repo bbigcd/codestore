@@ -1,3 +1,5 @@
+using System;
+
 namespace Diary.CQRS.Commands
 {
     public class CreateItemCommand : Command

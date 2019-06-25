@@ -28,6 +28,17 @@ namespace Diary.CQRS.CommandHandlers
 
             if (aggregate.Title != command.Title)
                 aggregate.ChangeTitle(command.Title);
+
+            if (aggregate.Description != command.Description)
+                aggregate.ChangeDescription(command.Title);
+
+            if (aggregate.From != command.From)
+                aggregate.ChangeFrom(command.From);
+
+            if (aggregate.To != command.To)
+                aggregate.ChangeTo(command.To);
+
+            _repository.Save(aggregate, command.Version);
         }
     }
 }
