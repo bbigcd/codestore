@@ -1,8 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Home Page 1";
+﻿@model List<Diary.CQRS.Reporting.DiaryItemDto>
+
+@{
+    ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome1</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Diary Items</h2>
+<table>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Title</td>
+        <td>@item.Version</td>
+        <td>@Html.ActionLink("Edit","Edit",new {id=item.Id})</td>
+        <td>@Html.ActionLink("Delete","Delete",new {id=item.Id})</td>
+    </tr>
+}
+</table>
+
+@Html.ActionLink("Add","Add")

@@ -37,10 +37,10 @@ namespace Diary.Web
 
             // services.AddSingleton<IRepository, Repository>();
             services.AddSingleton<IEventStorage, InMemoryEventStorage>();
-            services.AddSingleton<IEventBus, EventBus>();
             services.AddSingleton<ICommandHandlerFactory, StructureMapCommandHandlerFactory>();
             services.AddSingleton<IEventHandlerFactory, StructureMapEventHandlerFactory>();
             services.AddSingleton<ICommandBus, CommandBus>();
+            services.AddSingleton<IEventBus, EventBus>();
             services.AddSingleton<IReportDatabase, ReportDatabase>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

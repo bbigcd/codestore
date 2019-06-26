@@ -10,7 +10,7 @@ namespace Diary.CQRS.Utils
     {
         public IEnumerable<IEventHandler<T>> GetHandlers<T>() where T : Event
         {
-            // var handlers = GetHandlerType<T>();
+            var handlers = GetHandlerType<T>();
 
             // var lstHandlers = handlers.Select(handler => (IEventHandler<T>)ObjectFactory.GetInstance(handler)).ToList();
             // return lstHandlers;
@@ -18,15 +18,19 @@ namespace Diary.CQRS.Utils
         }
 
         private static IEnumerable<Type> GetHandlerType<T>() where T : Event
-        {/*
+        {
+            /*
             var handlers = typeof(IEventHandler<T>).Assembly.GetExportedTypes()
                 .Where(x => x.GetInterfaces()
                     .Any(a => a.IsGenericType && a.GetGenericTypeDefinition() == typeof(IEventHandler<>)));
-            return handlers;*/
+            return handlers;
+            */
 
             var handlers = typeof(IEventHandler<>).Assembly.GetExportedTypes()
                 .Where(x => x.GetInterfaces()
-                    .Any(a => a.IsGenericType && a.GetGenericTypeDefinition() == typeof(IEventHandler<>))).Where(h => h.GetInterfaces().Any(ii => ii.GetGenericArguments().Any(aa => aa == typeof(T)))).ToList();
+                    .Any(a => a.IsGenericType && a.GetGenericTypeDefinition() == typeof(IEventHandler<>)))
+                    .Where(h => h.GetInterfaces().Any(ii => ii.GetGenericArguments().Any(aa => aa == typeof(T))))
+                    .ToList();
 
 
             return handlers;

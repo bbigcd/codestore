@@ -17,7 +17,7 @@ namespace Diary.Web.Controllers
         private static ICommandBus _commandBus;
         private static IReportDatabase _reportDatabase;
 
-        public HomeController(ICommandBus commandBus, ReportDatabase reportDatabase)
+        public HomeController(ICommandBus commandBus, IReportDatabase reportDatabase)
         {
             _commandBus = commandBus;
             _reportDatabase = reportDatabase;
@@ -26,7 +26,6 @@ namespace Diary.Web.Controllers
         public IActionResult Index()
         {
             var model = _reportDatabase.GetItems();
-            Console.WriteLine("test" + model);
             return View(model);
         }
 
