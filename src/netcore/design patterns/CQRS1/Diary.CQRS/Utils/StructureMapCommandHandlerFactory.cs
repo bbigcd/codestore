@@ -1,8 +1,10 @@
+using System.ComponentModel.Design;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Diary.CQRS.CommandHandlers;
 using Diary.CQRS.Commands;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Diary.CQRS.Utils
 {
@@ -16,8 +18,15 @@ namespace Diary.CQRS.Utils
         public ICommandHandler<T> GetHandler<T>() where T : Command
         {
             var handlers = GetHandlerTypes<T>().ToList();
-
-            return (ICommandHandler<T>)handlers.FirstOrDefault();
+            var servies = new ServiceCollection();
+            var provider = servies.BuildServiceProvider();
+            var t = typeof(T);
+            var test = provider.GetService(t);
+            return handlers.Select(handler =>
+            {
+                var d = provider.GetService(handler);
+                return (ICommandHandler<T>)d;
+            }).FirstOrDefault();
             // var cmdHandler = handlers.Select(handler => ).FirstOrDefault();
             // var cmdHandler = handlers.Select(handler =>
             //     (ICommandHandler<T>)ObjectFactory.GetInstance(handler)).FirstOrDefault();

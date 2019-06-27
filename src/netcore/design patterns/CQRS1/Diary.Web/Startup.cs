@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Diary.CQRS.CommandHandlers;
+using Diary.CQRS.Commands;
+using Diary.CQRS.Domain;
 using Diary.CQRS.Messaging;
 using Diary.CQRS.Reporting;
 using Diary.CQRS.Storage;
@@ -35,8 +38,11 @@ namespace Diary.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            // services.AddSingleton<IRepository, Repository>();
+            services.AddSingleton<IRepository<DiaryItem>, Repository<DiaryItem>>();
             services.AddSingleton<IEventStorage, InMemoryEventStorage>();
+            services.AddSingleton<ICommandHandler<CreateItemCommand>, CreateItemCommandHandler>();
+            services.AddSingleton<ICommandHandler<ChangeItemCommand>, ChangeItemCommandHandler>();
+            services.AddSingleton<ICommandHandler<DeleteItemCommand>, DeleteItemCommandHandler>();
             services.AddSingleton<ICommandHandlerFactory, StructureMapCommandHandlerFactory>();
             services.AddSingleton<IEventHandlerFactory, StructureMapEventHandlerFactory>();
             services.AddSingleton<ICommandBus, CommandBus>();

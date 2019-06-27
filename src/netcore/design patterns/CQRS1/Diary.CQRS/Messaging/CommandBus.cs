@@ -15,6 +15,7 @@ namespace Diary.CQRS.Messaging
 
         public void Send<T>(T command) where T : Command
         {
+            // 获取对应的commandHandler
             var handler = _commandHandlerFactory.GetHandler<T>();
             if (handler != null)
             {
