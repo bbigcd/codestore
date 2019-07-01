@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OptionsSample.Models;
 
 namespace OptionsSample
 {
@@ -31,6 +32,24 @@ namespace OptionsSample
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddOptions();
+
+            services.Configure<MyOptions>(Configuration);
+
+            services.Configure<MyOptionsWithDelegateConfig>(myOptions =>
+            {
+                myOptions.Option1 = "value1_configured_by_delegate";
+                myOptions.Option2 = 500;
+            });
+
+            services.Configure<MySubOptions>(Configuration.GetSection("subsection"));
+
+            services.Configure<MyOptions>("named_options_1", Configuration);
+
+            services.Configure<MyOptions>("named_options_2", myOptions =>
+            {
+                myOptions.Option1 = "named_options_2_value1_from_action";
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
