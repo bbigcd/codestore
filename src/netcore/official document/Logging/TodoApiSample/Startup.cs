@@ -9,14 +9,20 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using TodoApiSample.Core.Interfaces;
+using TodoApiSample.Infrastructure;
 
 namespace TodoApiSample
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger _logger;
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            _logger = logger;
         }
 
         public IConfiguration Configuration { get; }
@@ -31,6 +37,9 @@ namespace TodoApiSample
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+
+            services.AddSingleton<ITodoRepository, TodoRepository>();
+            _logger.LogInformation("Added TodoRepository to services");
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
