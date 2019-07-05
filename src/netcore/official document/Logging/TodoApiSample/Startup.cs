@@ -49,6 +49,7 @@ namespace TodoApiSample
         {
             if (env.IsDevelopment())
             {
+                _logger.LogInformation("In Development environment");
                 app.UseDeveloperExceptionPage();
             }
             else
