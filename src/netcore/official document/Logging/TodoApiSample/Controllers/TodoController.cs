@@ -5,6 +5,7 @@ using TodoApiSample.Core.Interfaces;
 
 namespace TodoApiSample.Controllers
 {
+    [Route("api/[controller]")]
     public class TodoController : Controller
     {
         private readonly ITodoRepository _todoRepository;
@@ -15,6 +16,7 @@ namespace TodoApiSample.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult GetById(string id)
         {
             _logger.LogInformation(LoggingEvents.GetItem, "Getting item {ID}", id);
