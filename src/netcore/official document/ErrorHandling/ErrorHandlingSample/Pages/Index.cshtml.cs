@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,10 @@ namespace ErrorHandlingSample.Pages
     {
         public void OnGet()
         {
-
+            if (HttpContext.Request.Query.ContainsKey("throw"))
+            {
+                throw new FileNotFoundException("File not found exception thrown in index.chtml");
+            }
         }
     }
 }
