@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace StaticFilesSample
 {
@@ -31,6 +33,8 @@ namespace StaticFilesSample
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // 目录浏览
+            services.AddDirectoryBrowser();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -50,7 +54,47 @@ namespace StaticFilesSample
             }
 
             app.UseHttpsRedirection();
+
+            // 静态文件使用 默认路径 wwwroot 文件夹中
             app.UseStaticFiles();
+
+            // https://localhost:5001/MyImages/banner1.svg
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
+                RequestPath = "/MyImages"
+            });
+
+            // https://localhost:5001/StaticFiles/images/banner1.svg
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "MyStaticFiles")),
+                RequestPath = "/StaticFiles",
+                OnPrepareResponse = ctx =>
+               {
+                   ctx.Context.Response.Headers.Append("Cache-Control", "public, max-age=600");
+               }
+            });
+
+            // 设置 HTTP 响应标头
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Cache-Control", "public, max-age=600");
+                }
+            });
+
+            // 目录浏览
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
+                RequestPath = "/MyImages"
+            });
+
+
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
